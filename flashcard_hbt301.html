@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HBT301 — Pinjam Terjemah Flashcard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: #f5f5f3; padding: 1.5rem 1rem; min-height: 100vh; }
+#fw { max-width: 640px; margin: 0 auto; }
+#header-band { border-radius: 20px 20px 0 0; background: #1D3A6E; padding: 1.25rem 1.75rem 1.1rem; }
+#hbt-code { font-size: 11px; font-weight: 800; color: #6FA3D8; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+#hbt-title { font-family: 'Playfair Display', serif; font-size: 17px; color: #E8F0FB; line-height: 1.35; margin-bottom: 6px; }
+#hbt-week { font-size: 12px; color: #8EAED4; font-weight: 700; }
+#prog-bg { height: 5px; background: #E1F5EE; }
+#prog-fill { height: 5px; background: #1D9E75; transition: width 0.4s; width: 0%; }
+#meta { display: flex; justify-content: space-between; align-items: center; padding: 10px 1.75rem 8px; border-left: 0.5px solid #e0ddd6; border-right: 0.5px solid #e0ddd6; background: #fff; }
+#ctr { font-size: 13px; color: #888; font-weight: 700; }
+#skor { font-size: 13px; color: #888; }
+#card-outer { border-left: 0.5px solid #e0ddd6; border-right: 0.5px solid #e0ddd6; border-bottom: 0.5px solid #e0ddd6; border-radius: 0 0 20px 20px; overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+#illus-band { height: 110px; overflow: hidden; flex-shrink: 0; }
+#card-body { padding: 1.25rem 1.75rem 1.25rem; flex: 1; display: flex; flex-direction: column; }
+#tag-pill { display: inline-block; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 12px; border-radius: 99px; margin-bottom: 12px; }
+#soalan { font-family: 'Playfair Display', serif; font-size: 22px; line-height: 1.45; color: #1a1a1a; margin-bottom: 1rem; flex: 1; }
+#jawapan-wrap { border-radius: 12px; padding: 14px 16px; margin-bottom: 1rem; display: none; background: #E6F1FB; border: 0.5px solid #B5D4F4; }
+#jawapan-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 5px; color: #185FA5; }
+#jawapan { font-size: 40px; font-weight: 800; line-height: 1.25; font-family: 'Playfair Display', serif; color: #0C447C; }
+#btn-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.aksi { font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 800; padding: 8px 18px; border-radius: 10px; cursor: pointer; border: none; transition: transform 0.1s; }
+.aksi:active { transform: scale(0.97); }
+#btn-show { background: #1D3A6E; color: #E8F0FB; }
+#btn-tahu { background: #1D9E75; color: #fff; display: none; }
+#btn-ulang { background: #3B6D11; color: #EAF3DE; display: none; }
+#btn-skip { background: #f1efe8; color: #5F5E5A; border: 0.5px solid #d3d1c7; margin-left: auto; }
+#summary { display: none; border-radius: 0 0 20px 20px; border: 0.5px solid #e0ddd6; border-top: none; padding: 2.5rem 2rem; text-align: center; background: #fff; }
+#sum-icon { font-size: 44px; color: #1D9E75; margin-bottom: 10px; }
+#sum-title { font-family: 'Playfair Display', serif; font-size: 24px; color: #1a1a1a; margin-bottom: 6px; }
+#sum-sub { font-size: 15px; color: #666; margin-bottom: 1.5rem; line-height: 1.6; }
+.sum-btn { font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 800; padding: 9px 20px; border-radius: 10px; cursor: pointer; border: none; margin: 4px; }
+#sb1 { background: #1D3A6E; color: #E8F0FB; }
+#sb2 { background: #3B6D11; color: #EAF3DE; }
+</style>
+</head>
+<body>
+<div id="fw">
+  <div id="header-band">
+    <div id="hbt-code">HBT301 · Perkamusan dan Peristilahan</div>
+    <div id="hbt-title">Pinjam Terjemah (Calque) dan Hubungannya dengan Penterjemahan</div>
+    <div id="hbt-week">Tutorial Minggu 14</div>
+  </div>
+  <div id="prog-bg"><div id="prog-fill"></div></div>
+  <div id="meta">
+    <span id="ctr">Kad 1 / 50</span>
+    <span id="skor">Tahu: 0 &nbsp;|&nbsp; Ulang: 0</span>
+  </div>
+  <div id="card-outer">
+    <div id="illus-band"></div>
+    <div id="card-body">
+      <div id="tag-pill">Soalan</div>
+      <p id="soalan">Memuatkan...</p>
+      <div id="jawapan-wrap">
+        <div id="jawapan-label">Jawapan</div>
+        <div id="jawapan"></div>
+      </div>
+      <div id="btn-row">
+        <button class="aksi" id="btn-show" onclick="tunjuk()">Tunjuk jawapan</button>
+        <button class="aksi" id="btn-tahu" onclick="mark(true)">Tahu ✓</button>
+        <button class="aksi" id="btn-ulang" onclick="mark(false)">Ulang lagi</button>
+        <button class="aksi" id="btn-skip" onclick="skip()">Langkau →</button>
+      </div>
+    </div>
+  </div>
+  <div id="summary">
+    <div id="sum-icon">★</div>
+    <div id="sum-title">Sesi selesai!</div>
+    <div id="sum-sub"></div>
+    <div>
+      <button class="sum-btn" id="sb1" onclick="mula()">Mula semula</button>
+      <button class="sum-btn" id="sb2" onclick="ulangiSalah()">Ulang yang salah</button>
+    </div>
+  </div>
+</div>
+<script>
+const semua = [
+  {s:"Apakah definisi istilah 'calque' dalam konteks Bahasa Melayu?",j:"Pinjam terjemah.",k:"asas"},
+  {s:"Mengapa istilah seperti miokardium tidak diterjemahkan dalam jurnal perubatan?",j:"Untuk mengekalkan keseragaman dengan paradigma sains perubatan universal.",k:"perubatan"},
+  {s:"Istilah perubatan seperti epikardium dan perikardium berasal daripada bahasa apa?",j:"Greek dan Latin.",k:"perubatan"},
+  {s:"Apakah risiko jika Malaysia guna istilah perubatan sendiri?",j:"Komuniti antarabangsa tidak akan memahami atau mengambil serius hasil kajian tersebut.",k:"perubatan"},
+  {s:"Dalam sistem Westminster, situasi tiada parti mendapat majoriti mutlak dipanggil?",j:"Hung parliament.",k:"politik"},
+  {s:"Apakah padanan calque 'hung parliament' dalam Bahasa Melayu?",j:"Parlimen tergantung.",k:"politik"},
+  {s:"Siapa mencipta dan menyebarkan 'parlimen tergantung' semasa PRU-14?",j:"Rakyat, wartawan, dan pengulas politik — secara organik.",k:"politik"},
+  {s:"'Katak politik' adalah pinjam terjemah daripada frasa Inggeris _____.",j:"Political frog.",k:"politik"},
+  {s:"Mengapa metafora 'katak' mudah diserap dalam budaya politik Malaysia?",j:"Imej katak melompat selari dengan gambaran ahli parlimen yang tukar parti demi kepentingan diri.",k:"politik"},
+  {s:"Negara Asia manakah turut guna istilah 'katak' untuk ahli parlimen?",j:"Taiwan.",k:"politik"},
+  {s:"Apakah padanan calque 'backdoor government'?",j:"Kerajaan pintu belakang.",k:"politik"},
+  {s:"Mengapa rakyat pilih 'tebuk atap' berbanding 'kerajaan pintu belakang'?",j:"'Tebuk atap' lebih emotif dan meluahkan rasa marah serta dikhianati.",k:"politik"},
+  {s:"'Tebuk atap' dikategorikan sebagai _____, bukan calque.",j:"Metafora tempatan.",k:"politik"},
+  {s:"Antara 'lompat parti' dan 'katak politik', yang manakah lebih neutral?",j:"Lompat parti.",k:"politik"},
+  {s:"Apakah maksud tersirat 'katak politik' berbanding 'lompat parti'?",j:"Bersifat mengejek dan membawa muatan emosi negatif.",k:"politik"},
+  {s:"'Politik nombor' adalah calque bagi frasa _____.",j:"Numbers game.",k:"politik"},
+  {s:"Bagaimana konotasi 'politik nombor' berbeza dengan 'numbers game'?",j:"BM menjadikannya lebih negatif — menggambarkan seseorang yang tidak berprinsip.",k:"politik"},
+  {s:"Apakah terjemahan calque bagi 'ghost voter'?",j:"Pengundi hantu.",k:"ghost"},
+  {s:"Mengapa 'pengundi hantu' lebih memberi impak dalam budaya Melayu?",j:"Hantu membawa makna gelap, mengancam, dan tidak dijemput — melebihi makna teknikal 'ghost'.",k:"ghost"},
+  {s:"Padanan 'ghost writer' dalam Bahasa Melayu ialah _____.",j:"Penulis siluman.",k:"ghost"},
+  {s:"Mengapa 'siluman' dipilih untuk 'ghost writer'?",j:"Tepat menggambarkan entiti yang wujud tetapi identitinya disembunyikan dengan sengaja.",k:"ghost"},
+  {s:"'Cetak silap' digunakan sebagai padanan bagi _____.",j:"Ghost printing.",k:"ghost"},
+  {s:"Mengapa 'ghost' dalam 'ghost printing' diterjemah sebagai 'silap'?",j:"Konteksnya merujuk kesilapan atau ralat teknikal mesin cetak.",k:"ghost"},
+  {s:"Tiga padanan 'ghost' menunjukkan BM mempunyai _____ leksikal yang tinggi.",j:"Kekayaan.",k:"ghost"},
+  {s:"Apakah faktor utama menentukan pilihan antara pinjaman terus atau calque?",j:"Fungsi istilah tersebut dalam domain tertentu.",k:"asas"},
+  {s:"Apakah tanda utama bahasa yang adaptif?",j:"Tahu bila dan bagaimana meminjam, serta menyesuaikan pinjaman mengikut konteks.",k:"asas"},
+  {s:"Mengapa calque bukan proses penterjemahan mekanikal?",j:"Ia memerlukan pertimbangan dan penelitian terhadap sifat konsep dalam setiap domain budaya.",k:"asas"},
+  {s:"'Tebuk atap' merujuk kepada masuk ke rumah orang lain secara _____.",j:"Tanpa kebenaran.",k:"politik"},
+  {s:"Dalam paradigma kata perubatan, istilah adalah milik _____, bukan milik bahasa tertentu.",j:"Sains.",k:"perubatan"},
+  {s:"Bilakah 'parlimen tergantung' mula tersebar di media sosial Malaysia?",j:"Selepas PRU-14 pada tahun 2018.",k:"politik"},
+  {s:"Perbezaan antara 'ghost voter' (BI) dan 'pengundi hantu' (BM)?",j:"BI bersifat teknikal/undang-undang; BM bersifat tuduhan moral.",k:"ghost"},
+  {s:"Epikardium — apakah maksudnya?",j:"Lapisan luar jantung dalam paradigma sains perubatan.",k:"perubatan"},
+  {s:"Miokardium — apakah maksudnya?",j:"Otot jantung; istilahnya dipinjam secara pragmatik oleh Bahasa Melayu.",k:"perubatan"},
+  {s:"Apakah fungsi utama calque dalam wacana politik?",j:"Menyampaikan konsep baharu kepada rakyat dengan pantas.",k:"asas"},
+  {s:"Apakah had keupayaan calque menurut transkrip?",j:"Ia tidak semestinya boleh memindahkan sentimen atau perasaan dari bahasa asal.",k:"asas"},
+  {s:"Imej 'katak melompat' menggambarkan ahli parlimen yang tukar parti untuk _____.",j:"Kepentingan diri sendiri.",k:"politik"},
+  {s:"Mengapa 'ghost printing' tidak guna perkataan 'hantu'?",j:"Tidak melibatkan konsep kewujudan atau ketersembunyian sesebuah entiti.",k:"ghost"},
+  {s:"Calque menterjemah makna _____, bukan kata demi kata.",j:"Kontekstual.",k:"asas"},
+  {s:"Siapa terlibat dalam penciptaan calque secara spontan dalam politik?",j:"Rakyat dan pengulas media.",k:"politik"},
+  {s:"'Parlimen tergantung' mencerminkan sistem politik warisan British iaitu sistem _____.",j:"Westminster.",k:"politik"},
+  {s:"Mengapa penterjemah pilih 'siluman' untuk 'ghost writer'?",j:"Siluman menggambarkan sesuatu yang bergerak dalam senyap dan tidak kelihatan.",k:"ghost"},
+  {s:"BM memilih strateginya mengikut keperluan _____.",j:"Domain.",k:"asas"},
+  {s:"'Tebuk atap' muncul semasa peristiwa politik dikenali sebagai _____.",j:"Sheraton Move (Langkah Sheraton).",k:"politik"},
+  {s:"Calque mengekalkan konsep asal sambil menggunakan _____ bahasa sasaran.",j:"Leksikal (perbendaharaan kata).",k:"asas"},
+  {s:"Dalam 'numbers game', apakah yang paling penting selain nilai atau ideologi?",j:"Nombor (jumlah sokongan).",k:"politik"},
+  {s:"Perbezaan utama antara 'siluman' dan 'hantu' dalam terjemahan 'ghost'?",j:"Hantu = palsu/rekaan; siluman = wujud tetapi disembunyikan.",k:"ghost"},
+  {s:"Mengapa BM menghormati paradigma kata dalam bidang perubatan?",j:"Supaya pakar tempatan tidak terpencil daripada komuniti ilmu antarabangsa.",k:"perubatan"},
+  {s:"'Lompat parti' dan 'katak politik' dikaitkan dengan pergerakan _____.",j:"Ahli parlimen.",k:"politik"},
+  {s:"Adakah calque politik memerlukan kelulusan rasmi DBP?",j:"Tidak — ia sering muncul secara organik melalui penggunaan rakyat.",k:"politik"},
+  {s:"Dalam perubatan, fungsi utama istilah adalah untuk _____ dan _____ universal.",j:"Ketepatan; keseragaman.",k:"perubatan"}
+];
+
+const tema = {
+  asas:     {bg:"#EEEDFE",acc:"#534AB7",pill:"#CECBF6",pillTxt:"#26215C"},
+  perubatan:{bg:"#E1F5EE",acc:"#1D9E75",pill:"#9FE1CB",pillTxt:"#04342C"},
+  politik:  {bg:"#EAF3DE",acc:"#3B6D11",pill:"#C0DD97",pillTxt:"#173404"},
+  ghost:    {bg:"#FBEAF0",acc:"#993556",pill:"#F4C0D1",pillTxt:"#4B1528"}
+};
+
+const ilus = {
+  asas: (c) => `<svg width="100%" height="110" viewBox="0 0 640 110" xmlns="http://www.w3.org/2000/svg"><rect width="640" height="110" fill="${c.bg}"/><text x="55" y="68" font-size="50" font-family="serif" fill="${c.acc}" opacity="0.18">A</text><text x="170" y="82" font-size="34" font-family="serif" fill="${c.acc}" opacity="0.13">→</text><text x="245" y="68" font-size="50" font-family="serif" fill="${c.acc}" opacity="0.18">B</text><rect x="340" y="28" width="260" height="54" rx="12" fill="${c.pill}" opacity="0.6"/><text x="470" y="60" text-anchor="middle" font-size="19" font-family="Nunito,sans-serif" font-weight="800" fill="${c.pillTxt}">Pinjam Terjemah</text></svg>`,
+  perubatan: (c) => `<svg width="100%" height="110" viewBox="0 0 640 110" xmlns="http://www.w3.org/2000/svg"><rect width="640" height="110" fill="${c.bg}"/><circle cx="75" cy="55" r="38" fill="${c.acc}" opacity="0.15"/><text x="75" y="62" text-anchor="middle" font-size="24" fill="${c.acc}">♥</text><rect x="140" y="20" width="148" height="32" rx="8" fill="${c.pill}" opacity="0.7"/><text x="214" y="40" text-anchor="middle" font-size="14" font-family="Nunito,sans-serif" font-weight="800" fill="${c.pillTxt}">Miokardium</text><rect x="300" y="20" width="148" height="32" rx="8" fill="${c.pill}" opacity="0.5"/><text x="374" y="40" text-anchor="middle" font-size="14" font-family="Nunito,sans-serif" font-weight="800" fill="${c.pillTxt}">Epikardium</text><rect x="460" y="20" width="148" height="32" rx="8" fill="${c.pill}" opacity="0.35"/><text x="534" y="40" text-anchor="middle" font-size="14" font-family="Nunito,sans-serif" font-weight="800" fill="${c.pillTxt}">Perikardium</text><line x1="140" y1="76" x2="608" y2="76" stroke="${c.acc}" stroke-width="1" opacity="0.3"/><text x="374" y="96" text-anchor="middle" font-size="12" font-family="Nunito,sans-serif" fill="${c.acc}" opacity="0.7">Greek &amp; Latin → Paradigma Universal</text></svg>`,
+  politik: (c) => `<svg width="100%" height="110" viewBox="0 0 640 110" xmlns="http://www.w3.org/2000/svg"><rect width="640" height="110" fill="${c.bg}"/><ellipse cx="75" cy="72" rx="36" ry="26" fill="${c.acc}" opacity="0.12"/><ellipse cx="75" cy="60" rx="20" ry="17" fill="${c.acc}" opacity="0.2"/><text x="75" y="66" text-anchor="middle" font-size="22" fill="${c.acc}" opacity="0.6">🐸</text><rect x="130" y="18" width="168" height="30" rx="8" fill="${c.pill}" opacity="0.8"/><text x="214" y="37" text-anchor="middle" font-size="13" font-family="Nunito,sans-serif" font-weight="800" fill="${c.pillTxt}">Katak Politik</text><rect x="312" y="18" width="300" height="30" rx="8" fill="${c.pill}" opacity="0.6"/><text x="462" y="37" text-anchor="middle" font-size="13" font-family="Nunito,sans-serif" font-weight="800" fill="${c.pillTxt}">Parlimen Tergantung</text><rect x="130" y="60" width="168" height="30" rx="8" fill="${c.pill}" opacity="0.5"/><text x="214" y="79" text-anchor="middle" font-size="13" font-family="Nunito,sans-serif" font-weight="800" fill="${c.pillTxt}">Tebuk Atap</text><rect x="312" y="60" width="300" height="30" rx="8" fill="${c.pill}" opacity="0.4"/><text x="462" y="79" text-anchor="middle" font-size="13" font-family="Nunito,sans-serif" font-weight="800" fill="${c.pillTxt}">Politik Nombor</text></svg>`,
+  ghost: (c) => `<svg width="100%" height="110" viewBox="0 0 640 110" xmlns="http://www.w3.org/2000/svg"><rect width="640" height="110" fill="${c.bg}"/><text x="40" y="72" font-size="40" font-family="serif" fill="${c.acc}" opacity="0.18">ghost</text><line x1="188" y1="28" x2="234" y2="28" stroke="${c.acc}" stroke-width="1.5" opacity="0.4"/><line x1="188" y1="55" x2="234" y2="55" stroke="${c.acc}" stroke-width="1.5" opacity="0.4"/><line x1="188" y1="82" x2="234" y2="82" stroke="${c.acc}" stroke-width="1.5" opacity="0.4"/><rect x="244" y="14" width="108" height="28" rx="8" fill="${c.pill}" opacity="0.8"/><text x="298" y="32" text-anchor="middle" font-size="13" font-family="Nunito,sans-serif" font-weight="800" fill="${c.pillTxt}">Hantu</text><rect x="244" y="41" width="108" height="28" rx="8" fill="${c.pill}" opacity="0.6"/><text x="298" y="59" text-anchor="middle" font-size="13" font-family="Nunito,sans-serif" font-weight="800" fill="${c.pillTxt}">Siluman</text><rect x="244" y="68" width="108" height="28" rx="8" fill="${c.pill}" opacity="0.4"/><text x="298" y="86" text-anchor="middle" font-size="13" font-family="Nunito,sans-serif" font-weight="800" fill="${c.pillTxt}">Silap</text><rect x="366" y="14" width="254" height="28" rx="7" fill="${c.acc}" opacity="0.1"/><text x="493" y="32" text-anchor="middle" font-size="12" font-family="Nunito,sans-serif" fill="${c.acc}">ghost voter → pengundi hantu</text><rect x="366" y="41" width="254" height="28" rx="7" fill="${c.acc}" opacity="0.07"/><text x="493" y="59" text-anchor="middle" font-size="12" font-family="Nunito,sans-serif" fill="${c.acc}">ghost writer → penulis siluman</text><rect x="366" y="68" width="254" height="28" rx="7" fill="${c.acc}" opacity="0.04"/><text x="493" y="86" text-anchor="middle" font-size="12" font-family="Nunito,sans-serif" fill="${c.acc}">ghost printing → cetak silap</text></svg>`
+};
+
+const katLabel = {asas:"Asas",perubatan:"Perubatan",politik:"Politik",ghost:"Ghost"};
+let senarai=[],idx=0,tahu=0,ulang=0,salahList=[];
+function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function show(id){document.getElementById(id).style.display='';}
+function hide(id){document.getElementById(id).style.display='none';}
+
+function mula(){senarai=shuffle(semua);idx=0;tahu=0;ulang=0;salahList=[];show('card-outer');hide('summary');render();}
+function ulangiSalah(){if(!salahList.length)return;senarai=shuffle(salahList);idx=0;tahu=0;ulang=0;salahList=[];show('card-outer');hide('summary');render();}
+
+function render(){
+  if(idx>=senarai.length){tunjukSummary();return;}
+  const d=senarai[idx],t=tema[d.k]||tema.asas;
+  document.getElementById('illus-band').innerHTML=ilus[d.k](t);
+  const pill=document.getElementById('tag-pill');
+  pill.textContent=katLabel[d.k]||d.k;
+  pill.style.background=t.pill;pill.style.color=t.pillTxt;
+  document.getElementById('soalan').textContent=d.s;
+  document.getElementById('jawapan-wrap').style.display='none';
+  document.getElementById('jawapan').textContent=d.j;
+  show('btn-show');hide('btn-tahu');hide('btn-ulang');
+  document.getElementById('btn-show').style.background=t.acc;
+  kemas();
+}
+
+function tunjuk(){document.getElementById('jawapan-wrap').style.display='block';hide('btn-show');show('btn-tahu');show('btn-ulang');}
+function mark(ok){if(ok)tahu++;else{ulang++;salahList.push(senarai[idx]);}idx++;render();}
+function skip(){idx++;render();}
+
+function kemas(){
+  const total=senarai.length;
+  document.getElementById('prog-fill').style.width=Math.round(idx/total*100)+'%';
+  document.getElementById('ctr').textContent='Kad '+(Math.min(idx+1,total))+' / '+total;
+  document.getElementById('skor').textContent='Tahu: '+tahu+' | Ulang: '+ulang;
+}
+
+function tunjukSummary(){
+  hide('card-outer');
+  const total=tahu+ulang,pct=total?Math.round(tahu/total*100):0;
+  document.getElementById('sum-sub').textContent='Anda tahu '+tahu+' daripada '+total+' kad ('+pct+'%). '+(salahList.length?salahList.length+' kad perlu diulang.':'Semua betul — tahniah!');
+  document.getElementById('sb2').style.display=salahList.length?'':'none';
+  show('summary');
+}
+
+mula();
+</script>
+</body>
+</html>
